@@ -1,0 +1,30 @@
+﻿@model Library.Models.AddBooksModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddBooks</title>
+</head>
+<body>
+    <div class="mainCon">
+        <h2>ADD BOOK FORM</h2>
+       @using (Html.BeginForm("AddBooks", "AddBooks", FormMethod.Post))
+       { 
+        <span>Enter BOOK NAME</span>
+           @Html.TextBoxFor(book => book.BookName)
+            @Html.ValidationMessageFor(book => book.BookName)
+        <span>Enter BOOK AUTOR (If book have two ir more autors, split them by ',')</span>
+           @Html.TextBoxFor(book => book.Autors)
+           @Html.ValidationMessageFor(book => book.Autors)
+           <span>Enter STATUS (TRUE, FALSE)</span>
+           @Html.TextBoxFor(book => book.IsAvaible)
+           @Html.ValidationMessageFor(book => book.IsAvaible)
+           <input type="submit" value="ADD BOOK"/>
+       }
+        
+    </div>
+</body>
+</html>

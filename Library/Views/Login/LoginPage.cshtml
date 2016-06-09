@@ -1,0 +1,27 @@
+﻿@model Library.Models.LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LoginPage</title>
+</head>
+<body>
+    <div>
+        <h2>ENTER YOUR EMAIL FOR LOGIN</h2>
+        <p></p>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        {
+
+          @Html.TextBoxFor(i=>i.Email)
+
+          <input type="submit" value="GetIn" />
+        }
+    </div>
+</body>
+</html>

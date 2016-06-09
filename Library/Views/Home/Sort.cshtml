@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<System.Data.DataRow>
+
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "index";
+}
+
+<html>
+<head>
+    <title>Library</title>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <h2 class="smallh2">LIBRARY BOOKS LIST</h2>
+        <div class="loginConn">
+            @if (Library.Helpers.AuthHelper.IsAuthenticated(Context))
+            {
+                @Library.Helpers.AuthHelper.GetUser(Context)<br />
+                @Html.ActionLink("Exit", "LogOff", "Account") <br />
+                @Html.ActionLink("SHOW TAKEN BOOKS", "SortByUser", "Home") <br />
+
+            }
+            else
+            {
+                <a href="@Url.Action("LoginPage","Login")">LOGIN</a>
+                <a id="register" href="@Url.Action("Registration", "Registration")">REGISTRATION</a>
+            }
+        </div>
+        <a href="@Url.Action("AddBooks","AddBooks")">ADD NEW BOOK</a>
+    </div>
+    <div class="mainContainer">
+        <div class="header">
+            "
+            <ul>
+                <li>Book</li>
+                <li>Autor</li>
+                <li>IsAvaible</li>
+                <li>@Html.ActionLink("VIEW ALL", "index", "Home")</li>
+            </ul>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <ul>
+                    <li>@Html.DisplayFor(modelItem => item["Book"])</li>
+                    <li>@Html.DisplayFor(modelItem => item["Autor"])</li>
+                    <li>@Html.DisplayFor(modelItem => item["IsAvailable"])</li>
+                    <li>@Html.ActionLink("REMOVE BOOK", "RemBooks", "AddBooks", new { id = item["id"] }, null)</li>
+                    <li>@Html.ActionLink("BOOK HISTORY", "GetHistory", "History", new { bookId = item["id"], bookName = item["Book"] }, null)</li>
+                    @if (Library.Helpers.AuthHelper.IsLogged && item["IsAvailable"].ToString().ToLower() != "false")
+                    {
+                        <li>@Html.ActionLink("TAKE BOOK", "History", "History", new { user = Library.Helpers.AuthHelper.GetUser(Context), bookId = item["id"], bookName = item["Book"] }, null)</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+
+    <br />
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</body>
+</html>

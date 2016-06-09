@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<System.Data.DataRow>
+@using Library.Models;
+@using System.Data;
+@using PagedList.Mvc;
+
+
+
+
+<html>
+<head>
+    <title>Library</title>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<body>
+   
+    <div class="main">
+        <h2 class="smallh2">BOOKS TAKEN BY @Library.Helpers.AuthHelper.GetUser(Context)</h2>
+        <div class="loginConn">
+            @if (Library.Helpers.AuthHelper.IsAuthenticated(Context))
+            {
+                @Library.Helpers.AuthHelper.GetUser(Context)<br />
+                @Html.ActionLink("Exit", "LogOff", "Account") <br />
+
+            }
+            else
+            {
+                <a href="@Url.Action("LoginPage","Login")">LOGIN</a>
+                <a id="register" href="@Url.Action("Registration", "Registration")">REGISTRATION</a>
+            }
+        </div>
+        
+    </div>
+    <div class="mainContainer">
+        <div class="header">
+            "
+            <ul>
+                <li>Book</li>
+                <li>Date</li>
+                
+                <li>@Html.ActionLink("RETURN TO MAIN", "index", "Home")</li>
+            </ul>
+        </div>
+        @foreach (DataRow item in Model)
+        {
+            <div class="row">
+                <ul>
+                    <li>@Html.DisplayFor(modelItem => item["BookName"])</li>
+                    <li>@Html.DisplayFor(modelItem => item["Date"])</li>
+                    
+                </ul>
+            </div>
+        }
+    </div>
+
+    <br />
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</body>
+</html>

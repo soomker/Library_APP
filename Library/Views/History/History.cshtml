@@ -1,0 +1,37 @@
+﻿@model Library.Models.BookHistoryModel
+@using Library.Models
+@using System.Data
+@using System;
+
+<html>
+<head>
+    <title>HISTORY OF BOOKS</title>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>ViewHistory</h2>
+    <h2>"@Html.DisplayFor(i => @Model.BookName)" BOOK</h2>
+    @Html.ActionLink("RETURN TO MAIN PAGE", "index", "Home")
+    <div class="mainContainer">
+        <div class="header">
+            <ul>
+                <li>LOGIN</li>
+                <li>DATE</li>
+                <li>Action</li>
+                
+            </ul>
+        </div>
+        
+        @foreach (DataRow item in @Model.hisDt.Rows)
+        {
+            <div class="row">
+                <ul>
+                    <li>@Html.DisplayFor(i => item["Login"])</li>
+                    <li>@Html.DisplayFor(i => item["Date"])</li>
+                    <li>@Html.DisplayFor(i => item["Action"])</li>
+                </ul>
+            </div>
+        }
+    </div>
+</body>
+</html>

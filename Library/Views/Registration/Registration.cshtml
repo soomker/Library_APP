@@ -1,0 +1,20 @@
+﻿@model Library.Models.RegistrationModel
+
+@{ViewBag.Title = "Registration";}
+
+<head>
+    <title>REGISTRATION</title>
+    <link href="~/Content/reg.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="mainCon">
+        <h2>RegistrationForm</h2>
+        <span>Введите ваш Email: </span>
+        @using (Html.BeginForm("Registration", "Registration", FormMethod.Post))
+        {
+            @Html.TextBoxFor(reg => reg.Email)
+            @Html.ValidationMessageFor(reg => reg.Email)<br />
+            <input type="submit" value="Register" />
+        }
+    </div>
+</body>
